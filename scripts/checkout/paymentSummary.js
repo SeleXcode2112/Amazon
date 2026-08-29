@@ -96,6 +96,6 @@ function updateCheckoutHeader(cartQuantity) {
     ".js-checkout-header-middle-section",
   );
   if (headerMiddle) {
-    headerMiddle.innerHTML = `Checkout (<a class="return-to-home-link" href="amazon.html">${cartQuantity} items</a>)`;
+    headerMiddle.innerHTML = `Checkout (<a class="return-to-home-link" href="index.html">${cartQuantity} items</a>)`;
   }
 }

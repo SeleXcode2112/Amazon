@@ -48,7 +48,7 @@ function renderOrders(searchTerm = "") {
 
   if (filteredOrders.length === 0) {
     document.querySelector(".js-orders-grid").innerHTML = `
-      You have no orders. <a href="amazon.html">View products</a>
+      You have no orders. <a href="index.html">View products</a>
     `;
     return;
   }
