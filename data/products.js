@@ -15,12 +15,14 @@ class Product {
   name;
   rating;
   priceCents;
+  keywords;
   constructor(productDetails) {
     this.id = productDetails.id;
     this.image = productDetails.image;
     this.name = productDetails.name;
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
+    this.keywords = productDetails.keywords || [];
   }
 
   getStartsUrl() {
@@ -79,8 +81,9 @@ export function loadProductsFetch() {
         return new Product(productDetails);
       });
       console.log("load products");
-    }).catch(()=>{
-      console.log('unexpected error.please try again later');
+    })
+    .catch(() => {
+      console.log("unexpected error.please try again later");
     });
   return promise;
 }
