@@ -96,9 +96,7 @@ function renderProductsGrid(filteredProducts) {
 }
 
 function showAddedMessage(productId) {
-  const addedElement = document.querySelector(
-    `.js-added-to-cart-${productId}`,
-  );
+  const addedElement = document.querySelector(`.js-added-to-cart-${productId}`);
   addedElement.classList.add("added-to-cart-visible");
 
   // Clear any existing timeout for this product
@@ -117,14 +115,15 @@ document.querySelector(".search-button").addEventListener("click", () => {
   performSearch();
 });
 
-document.querySelector(".search-bar").addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
-    performSearch();
-  }
+document.querySelector(".search-bar").addEventListener("input", () => {
+  performSearch();
 });
 
 function performSearch() {
-  const searchTerm = document.querySelector(".search-bar").value.toLowerCase().trim();
+  const searchTerm = document
+    .querySelector(".search-bar")
+    .value.toLowerCase()
+    .trim();
 
   if (!searchTerm) {
     renderProductsGrid();

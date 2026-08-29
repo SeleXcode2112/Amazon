@@ -1,25 +1,25 @@
-import { orders } from '../data/orders.js';
-import { getProduct, loadProductsFetch } from '../data/products.js';
-import { cart, addToCart } from '../data/cart.js';
-import formatCurrency from './utils/money.js';
-import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { orders } from "../data/orders.js";
+import { getProduct, loadProductsFetch } from "../data/products.js";
+import { cart, addToCart } from "../data/cart.js";
+import formatCurrency from "./utils/money.js";
+import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 
 async function initPage() {
   await loadProductsFetch();
   renderOrders();
   updateCartQuantity();
 
-  document.querySelector('.js-search-button').addEventListener('click', () => {
-    const searchBar = document.querySelector('.js-search-bar');
+  document.querySelector(".js-search-button").addEventListener("click", () => {
+    const searchBar = document.querySelector(".js-search-bar");
     const searchTerm = searchBar.value.toLowerCase();
     renderOrders(searchTerm);
   });
-  
-  document.querySelector('.js-search-bar').addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      const searchTerm = document.querySelector('.js-search-bar').value.toLowerCase();
-      renderOrders(searchTerm);
-    }
+
+  document.querySelector(".js-search-bar").addEventListener("input", () => {
+    const searchTerm = document
+      .querySelector(".js-search-bar")
+      .value.toLowerCase();
+    renderOrders(searchTerm);
   });
 }
 
@@ -28,12 +28,12 @@ function updateCartQuantity() {
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
-  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
 }
 
-function renderOrders(searchTerm = '') {
-  let ordersHTML = '';
-  
+function renderOrders(searchTerm = "") {
+  let ordersHTML = "";
+
   const filteredOrders = orders.filter((order) => {
     if (!searchTerm) return true;
     let hasMatchingProduct = false;
@@ -47,15 +47,15 @@ function renderOrders(searchTerm = '') {
   });
 
   if (filteredOrders.length === 0) {
-    document.querySelector('.js-orders-grid').innerHTML = `
+    document.querySelector(".js-orders-grid").innerHTML = `
       You have no orders. <a href="amazon.html">View products</a>
     `;
     return;
   }
 
   filteredOrders.forEach((order) => {
-    const orderTimeString = dayjs(order.orderTime).format('MMMM D');
-    
+    const orderTimeString = dayjs(order.orderTime).format("MMMM D");
+
     ordersHTML += `
       <div class="order-container">
         <div class="order-header">
@@ -79,8 +79,10 @@ function renderOrders(searchTerm = '') {
 
     order.products.forEach((productDetails) => {
       const product = getProduct(productDetails.productId);
-      const deliveryTimeString = dayjs(productDetails.estimatedDeliveryTime).format('MMMM D');
-      
+      const deliveryTimeString = dayjs(
+        productDetails.estimatedDeliveryTime,
+      ).format("MMMM D");
+
       ordersHTML += `
         <div class="product-image-container">
           <img src="${product.image}">
@@ -116,10 +118,10 @@ function renderOrders(searchTerm = '') {
     `;
   });
 
-  document.querySelector('.js-orders-grid').innerHTML = ordersHTML;
+  document.querySelector(".js-orders-grid").innerHTML = ordersHTML;
 
-  document.querySelectorAll('.js-buy-again').forEach((button) => {
-    button.addEventListener('click', () => {
+  document.querySelectorAll(".js-buy-again").forEach((button) => {
+    button.addEventListener("click", () => {
       const productId = button.dataset.productId;
       addToCart(productId);
       updateCartQuantity();
